@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form name="data">
+    <input type="text" id="f_name"/>
+    <br>
+    <br>
+    <input type="text" id="l_name"/>
+    <br>
+    <br>
+    <input type="button" id="btn" value="Жмакни меня" >
+    <br><br>
+    <div id="status"></div>
+    <div id="container"></div>
+</form>
+<script>
+    btn.onclick = function () {
+    var xmlHttp = new XMLHttpRequest();
+    var url = '/add';   // .... //
+    var  f_name = document.getElementById('f_name').value;
+    var  l_name = document.getElementById('l_name').value;
+    var vars = 'firstname=' + f_name + '&lastname=' + l_name;
+        xmlHttp.open('POST',url,true);
+        xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+        xmlHttp.onreadystatechange = function(){
+        if(xmlHttp.readyState == 4 && xmlHttp.status == 200 ){
+           var return_data = xmlHttp.responseText;
+            document.getElementById('status').innerHTML = return_data;
+           /* if (callback != null) {
+                var obj = JSON.parse(xp.responseText);
+                if (typeof callback === 'function')
+                    callback.call(this, obj);//Внутри функции this будет все , что в obj есть.
+            }*/
+        }
+    };
+        document.getElementById('status').innerHTML = 'processing run...';
+        xmlHttp.send(vars);
+        document.getElementById('f_name').value = '';
+        document.getElementById('l_name').value = '';
+};
+
+   /* function CreateRequest(){
+        var Request = false;
+
+        if (window.XMLHttpRequest)
+        {
+            //Gecko-совместимые браузеры, Safari, Konqueror
+            Request = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {
+            //Internet explorer
+            try
+            {
+                Request = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch (CatchException)
+            {
+                Request = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+        }
+
+        if (!Request)
+        {
+            alert("Невозможно создать XMLHttpRequest");
+        }
+
+        return Request;
+    }*/
+
+
+
+
+/*
+ Функция посылки запроса к файлу на сервере
+ r_method  - тип запроса: GET или POST
+ r_path    - путь к файлу
+ r_args    - аргументы вида a=1&b=2&c=3...
+ r_handler - функция-обработчик ответа от сервера
+ */
+/*
+    function SendRequest(r_method, r_path, r_args, r_handler){               //Создаём запрос
+
+        var   Request = new XMLHttpRequest();
+        if (!Request){                                                         //Проверяем существование запроса еще раз
+            return;
+        }
+
+
+        Request.onreadystatechange = function(){
+
+            if (Request.readyState == 4){//Если обмен данными завершен
+                if (Request.status == 200) {
+                    r_handler(Request);  //Передаем управление обработчику пользователя
+                }
+                else{
+                 console.log('Error!:' + Request.status);   //Оповещаем пользователя о произошедшей ошибке
+                }
+            }
+            else  {
+
+                document.getElementById('status').innerHTML = Request.status ;  //Оповещаем пользователя о загрузке
+            }
+
+        };
+
+
+        if (r_method.toLowerCase() == "get" && r_args.length > 0) //Проверяем, если требуется сделать GET-запрос
+            r_path += "?" + r_args;
+
+        //Инициализируем соединение
+        Request.open(r_method, r_path, true);
+
+        if (r_method.toLowerCase() == "post"){  //Если это POST-запрос
+            Request.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=utf-8");       //Устанавливаем заголовок
+            Request.send(r_args);        //Посылаем запрос
+        }
+        else{
+            Request.send(null);      //Если это GET-запрос Посылаем нуль-запрос
+        }
+    }
+*/
+
+</script>
+</body>
+</html>
